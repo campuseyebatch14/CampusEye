@@ -3,42 +3,57 @@
 {% set active_page = "index" %}
 
 {% block main %}
-<main>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
-    <table>
-        <caption>Student Details</caption>
-        <thead>
-            <th>Photo</th>
-            <th>Name</th>
-            <th>Id</th>
-            <th>Branch</th>
-            <th>Operation</th>
-        </thead>
-        <tbody>
-            {% for student in students_list %}
-            <tr class="student-card">
-                <td>
-                    <img src="{{student['photoUrl']}}" alt="photo of {{student['name']}}" width="100px" height="100px">
-                </td>
-                <td>{{student['name']}}</td>
-                <td>{{student['studentId']}}</td>
-                <td>{{student['branch']}}</td>
-                <td>
-                    <div class="btn-container">
-                        <a title="delete student" href="{{url_for('delete_student', student_id = student.studentId)}}">
-                            <img src="{{url_for('static', filename='images/delete-icon.png')}}" alt="delete button"
-                                width="40px" />
-                        </a>
-                        <a title="edit student" href="{{ url_for('edit_student', student_id = student.studentId) }}">
-                            <img src="{{url_for('static', filename='images/edit-icon.png')}}" alt="edit button"
-                                width="40px" />
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ url_for('download_report') }}" class="btn download-btn">Download Report</a>
+<main class="dashboard">
+    <div class="hero-section">
+        <h1>CampusEye</h1>
+        <p class="subtitle">Next-Gen Intelligent Surveillance System</p>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-header">
+            <h3>Registered Students</h3>
+            <a href="{{ url_for('download_report') }}" class="btn download-btn">
+                <i class="fa-solid fa-cloud-arrow-down"></i> Download Report
+            </a>
+        </div>
+        
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profile</th>
+                        <th>Name</th>
+                        <th>Student ID</th>
+                        <th>Branch</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students_list %}
+                    <tr class="student-row">
+                        <td>
+                            <div class="img-wrapper">
+                                <img src="{{student['photoUrl']}}" alt="{{student['name']}}">
+                            </div>
+                        </td>
+                        <td class="name-cell">{{student['name']}}</td>
+                        <td class="id-cell">{{student['studentId']}}</td>
+                        <td><span class="branch-badge">{{student['branch']}}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <a class="icon-btn edit" title="Edit" href="{{ url_for('edit_student', student_id = student.studentId) }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a class="icon-btn delete" title="Delete" href="{{url_for('delete_student', student_id = student.studentId)}}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>
 {% endblock %}

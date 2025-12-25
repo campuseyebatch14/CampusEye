@@ -145,24 +145,46 @@ def delete_student(student_id):
 
 
 # --------------------------------------------------
-# ✅ FIXED EMAILJS BACKEND (FINAL)
+# ✅ FIXED EMAILJS BACKEND (Supports Live Images)
 # --------------------------------------------------
 @app.route('/send-email', methods=['POST'])
 def send_email():
-    data = request.get_json()
+    # Check if this is a file upload (live image) or just JSON
+    live_image = request.files.get('live_image')
+    
+    if live_image:
+        data = request.form  # When uploading files, data is in .form
+    else:
+        data = request.get_json() or {}
+
     if not data:
         return jsonify({'success': False, 'error': 'No data provided'})
+
+    # Default to the database photo URL
+    final_photo_url = data.get("photoUrl")
+
+    # If a live captured image was sent, upload it to Cloudinary
+    if live_image:
+        try:
+            print("Uploading live capture to Cloudinary...")
+            upload_result = upload(live_image)
+            final_photo_url = upload_result['secure_url']
+            print(f"Live image uploaded: {final_photo_url}")
+        except Exception as e:
+            print(f"Cloudinary upload failed: {e}")
+            # If upload fails, we keep 'final_photo_url' as the database photo (fallback)
 
     payload = {
         "service_id": os.getenv("EMAILJS_SERVICE_ID"),
         "template_id": os.getenv("EMAILJS_TEMPLATE_ID"),
-        "user_id": os.getenv("EMAILJS_USER_ID"),  # PUBLIC KEY
+        "user_id": os.getenv("EMAILJS_USER_ID"),         
+        "accessToken": os.getenv("EMAILJS_PRIVATE_KEY"),  # REQUIRED for backend calls
         "template_params": {
             "to_name": data.get("name"),
             "student_id": data.get("studentId"),
             "branch": data.get("branch"),
             "timestamp": data.get("timestamp"),
-            "photo_url": data.get("photoUrl"),
+            "photo_url": final_photo_url,  # This will be the live image URL if upload succeeded
             "to_email": os.getenv("RECIPIENT_EMAIL")
         }
     }
@@ -172,17 +194,16 @@ def send_email():
             "https://api.emailjs.com/api/v1.0/email/send",
             headers={"Content-Type": "application/json"},
             json=payload,
-            timeout=5
+            timeout=10  # Increased timeout slightly for image upload time
         )
 
-        print("EmailJS HTTP:", response.status_code)
-        print("EmailJS response:", response.text)
+        if response.status_code != 200:
+            print("EmailJS Error:", response.text)
 
         return jsonify({"success": response.status_code == 200})
 
     except requests.RequestException as e:
         return jsonify({'success': False, 'error': str(e)})
-
 
 
 @app.route('/download-report')
