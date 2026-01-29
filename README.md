@@ -55,20 +55,24 @@ Before you begin, ensure you have the following accounts and credentials:
 ### 1\. Clone the Repository
 
 Bash
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   git clone   cd CampusEye   `
+git clone <repository-url>
+cd CampusEye
 
 ### 2\. Create a Virtual Environment
 
 Bash
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   python -m venv venv  # On Windows  venv\Scripts\activate  # On macOS/Linux  source venv/bin/activate   `
+python -m venv venv
+# On Windows
+venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate `
 
 ### 3\. Install Dependencies
 
 Bash
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pip install -r requirements.txt   `
+pip install -r requirements.txt
 
 The project requires several libraries including Flask, deepface, opencv-python, pymongo, and cloudinary.
 
@@ -78,7 +82,23 @@ Create a .env file in the root directory and add the following keys:
 
 Code snippet
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   # Flask  FLASK_SECRET_KEY=your_secret_key  # MongoDB  MONGODB_URI=your_mongodb_connection_string  # Cloudinary  CLOUD_NAME=your_cloud_name  API_KEY=your_api_key  API_SECRET=your_api_secret  # EmailJS  EMAILJS_SERVICE_ID=your_service_id  EMAILJS_TEMPLATE_ID=your_template_id  EMAILJS_USER_ID=your_user_id  EMAILJS_PRIVATE_KEY=your_private_key  RECIPIENT_EMAIL=admin@example.com  # Telegram (Optional)  BOT_TOKEN=your_bot_token  CHAT_ID=your_chat_id   `
+# Flask
+FLASK_SECRET_KEY=your_secret_key
+
+# MongoDB
+MONGODB_URI=your_mongodb_connection_string
+
+# Cloudinary
+CLOUD_NAME=your_cloud_name
+API_KEY=your_api_key
+API_SECRET=your_api_secret
+
+# EmailJS
+EMAILJS_SERVICE_ID=your_service_id
+EMAILJS_TEMPLATE_ID=your_template_id
+EMAILJS_USER_ID=your_user_id
+EMAILJS_PRIVATE_KEY=your_private_key
+RECIPIENT_EMAIL=admin@example.com
 
 🏃 Running the Application
 --------------------------
@@ -89,7 +109,7 @@ Launch the Flask server to manage student registrations:
 
 Bash
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   python app.py   `
+python app.py  `
 
 Access the dashboard at http://127.0.0.1:5000.
 
@@ -99,7 +119,7 @@ Run the main script to start real-time monitoring via your camera:
 
 Bash
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   python main.py   `
+python main.py
 
 _Note: Press 'q' to stop the camera feed._
 
